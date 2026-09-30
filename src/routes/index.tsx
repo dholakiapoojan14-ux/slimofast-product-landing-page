@@ -31,7 +31,10 @@ const orderSchema = z.object({
 const subscriptionSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(80, "Name must be 80 characters or fewer."),
   phone: indianMobile,
+  address: z.string().trim().min(8, "Please enter your complete delivery address.").max(240, "Address must be 240 characters or fewer."),
+  pincode: z.string().trim().regex(/^\d{6}$/, "Enter a valid 6-digit pincode."),
   goal: z.string().regex(/^(5|10|15|20|25)$/, "Please choose a goal."),
+  payment: z.enum(["cod", "online"]),
 });
 
 const questions = [
@@ -123,7 +126,8 @@ function SlimofastPage() {
     }
     setSubscriptionErrors({});
     const WHATSAPP_DESTINATION_NUMBER = "91XXXXXXXXXX";
-    const message = `Hello Slimofast, my name is ${parsed.data.name}. I am interested in the ${parsed.data.goal} kg goal. You can reach me at ${parsed.data.phone}.`;
+    const paymentLabel = parsed.data.payment === "cod" ? "Pay on Delivery" : "Online payment";
+    const message = `Hello Slimofast, my name is ${parsed.data.name}. I am interested in the ${parsed.data.goal} kg goal with ${paymentLabel}. My mobile number is ${parsed.data.phone}. Delivery address: ${parsed.data.address}, ${parsed.data.pincode}.`;
     window.location.assign(`https://wa.me/${WHATSAPP_DESTINATION_NUMBER}?text=${encodeURIComponent(message)}`);
   }
 
@@ -247,13 +251,17 @@ function SlimofastPage() {
 
       <section className="subscribe-section section-wrap" aria-labelledby="subscribe-title">
         <div className="subscribe-heading"><p className="eyebrow">A LITTLE HELP GETTING STARTED</p><h2 id="subscribe-title">Let's make a plan.</h2><p>Share your goal and we’ll get your Slimofast conversation started on WhatsApp.</p></div>
-        <form className="subscribe-form" onSubmit={handleSubscriptionSubmit} noValidate aria-label="WhatsApp wellness plan form">
-          <div className="form-field"><label htmlFor="subscribe-name">Name</label><input id="subscribe-name" name="name" placeholder="Your name" autoComplete="name" maxLength={80} aria-invalid={Boolean(subscriptionErrors["name"])} aria-describedby={subscriptionErrors["name"] ? "subscribe-name-error" : undefined} />{subscriptionErrors["name"] && <span className="field-error" id="subscribe-name-error">{subscriptionErrors["name"]}</span>}</div>
-          <div className="form-field"><label htmlFor="subscribe-phone">Mobile number</label><div className="phone-input"><span aria-hidden="true">+91</span><input id="subscribe-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="10-digit mobile number" maxLength={18} aria-invalid={Boolean(subscriptionErrors["phone"])} aria-describedby={subscriptionErrors["phone"] ? "subscribe-phone-error" : undefined} /></div>{subscriptionErrors["phone"] && <span className="field-error" id="subscribe-phone-error">{subscriptionErrors["phone"]}</span>}</div>
-          <div className="form-field"><label htmlFor="subscribe-goal">Your goal</label><select id="subscribe-goal" name="goal" defaultValue="10" aria-invalid={Boolean(subscriptionErrors["goal"])} aria-describedby={subscriptionErrors["goal"] ? "subscribe-goal-error" : undefined}>{goals.map((goal) => <option key={goal.kilos} value={goal.kilos}>{goal.kilos} kg goal</option>)}</select>{subscriptionErrors["goal"] && <span className="field-error" id="subscribe-goal-error">{subscriptionErrors["goal"]}</span>}</div>
+        <form className="subscribe-form subscription-reference-form" onSubmit={handleSubscriptionSubmit} noValidate aria-label="WhatsApp wellness plan form">
+          <input type="hidden" name="goal" value={selectedGoal} />
+          <input type="hidden" name="payment" value={payment} />
+          <div className="form-field"><label htmlFor="subscribe-name">Naam</label><input id="subscribe-name" name="name" placeholder="Your full name" autoComplete="name" maxLength={80} aria-invalid={Boolean(subscriptionErrors["name"])} aria-describedby={subscriptionErrors["name"] ? "subscribe-name-error" : undefined} />{subscriptionErrors["name"] && <span className="field-error" id="subscribe-name-error">{subscriptionErrors["name"]}</span>}</div>
+          <div className="form-field"><label htmlFor="subscribe-phone">Mobile Number</label><div className="phone-input"><span aria-hidden="true">+ 91</span><input id="subscribe-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="10-digit number" maxLength={18} aria-invalid={Boolean(subscriptionErrors["phone"])} aria-describedby={subscriptionErrors["phone"] ? "subscribe-phone-error" : undefined} /></div>{subscriptionErrors["phone"] && <span className="field-error" id="subscribe-phone-error">{subscriptionErrors["phone"]}</span>}</div>
+          <div className="form-field subscription-address"><label className="sr-only" htmlFor="subscribe-address">Delivery address</label><input id="subscribe-address" name="address" placeholder="House no, street, area" autoComplete="street-address" maxLength={240} aria-invalid={Boolean(subscriptionErrors["address"])} aria-describedby={subscriptionErrors["address"] ? "subscribe-address-error" : undefined} />{subscriptionErrors["address"] && <span className="field-error" id="subscribe-address-error">{subscriptionErrors["address"]}</span>}</div>
+          <div className="form-field"><label htmlFor="subscribe-pincode">Pincode</label><input id="subscribe-pincode" name="pincode" type="text" inputMode="numeric" autoComplete="postal-code" placeholder="6-digit pincode" maxLength={6} aria-invalid={Boolean(subscriptionErrors["pincode"])} aria-describedby={subscriptionErrors["pincode"] ? "subscribe-pincode-error" : undefined} />{subscriptionErrors["pincode"] && <span className="field-error" id="subscribe-pincode-error">{subscriptionErrors["pincode"]}</span>}</div>
+          <fieldset className="payment-fieldset"><legend>Payment Type</legend><div className="payment-choices"><Button type="button" variant={payment === "cod" ? "default" : "outline"} className={`payment-choice${payment === "cod" ? " is-selected" : ""}`} aria-pressed={payment === "cod"} onClick={() => setPayment("cod")}>💰 Pay on Delivery</Button><Button type="button" variant={payment === "online" ? "default" : "outline"} className={`payment-choice${payment === "online" ? " is-selected" : ""}`} aria-pressed={payment === "online"} onClick={() => setPayment("online")}>💳 Online (₹100 OFF)</Button></div></fieldset>
           {subscriptionNotice && <p className={`form-notice${Object.keys(subscriptionErrors).length ? " form-notice-error" : ""}`} role="status">{subscriptionNotice}</p>}
-          <Button type="submit" className="primary-action submit-order">Continue on WhatsApp <ArrowDown aria-hidden="true" /></Button>
-          <p className="privacy-note">WhatsApp destination: <code>91XXXXXXXXXX</code> — replace once your business number is confirmed.</p>
+          <div className="subscription-submit-label">Payment Type</div>
+          <Button type="submit" className="primary-action submit-order">Place Order - Free Delivery ✓</Button>
         </form>
       </section>
 
