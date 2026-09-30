@@ -4,3 +4,4 @@
 - [x] Match the supplied mobile Figma frame's copy and visual proportions without changing interactions.
 - [x] Recheck phone validation, selection, FAQ, WhatsApp, sticky order, and thank-you flow.
 - [x] Match the reference payment amounts: ₹999 for Cash on Delivery and ₹899 for online payment.
+- [ ] Replace the lower subscription form with the attached mobile form and remove the WhatsApp destination note.
