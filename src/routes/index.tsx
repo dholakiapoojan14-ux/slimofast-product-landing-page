@@ -1,7 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { ArrowDown, Check, ChevronDown, Leaf, Plus, ShieldCheck } from "lucide-react";
+import { ArrowDown, Check, ChevronDown, Facebook, Instagram, Leaf, Plus, ShieldCheck, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const goals = [
@@ -29,12 +29,7 @@ const orderSchema = z.object({
 });
 
 const subscriptionSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your name.").max(80, "Name must be 80 characters or fewer."),
   phone: indianMobile,
-  address: z.string().trim().min(8, "Please enter your complete delivery address.").max(240, "Address must be 240 characters or fewer."),
-  pincode: z.string().trim().regex(/^\d{6}$/, "Enter a valid 6-digit pincode."),
-  goal: z.string().regex(/^(5|10|15|20|25)$/, "Please choose a goal."),
-  payment: z.enum(["cod", "online"]),
 });
 
 const questions = [
@@ -82,6 +77,7 @@ function SlimofastPage() {
   const [subscriptionErrors, setSubscriptionErrors] = useState<Record<string, string>>({});
   const [orderNotice, setOrderNotice] = useState("");
   const [subscriptionNotice, setSubscriptionNotice] = useState("");
+  const [openFooterPanel, setOpenFooterPanel] = useState<"legal" | "links" | null>(null);
   const orderForm = useRef<HTMLFormElement>(null);
   const picked = goals.find((goal) => goal.kilos === selectedGoal) ?? goals[1];
   const price = picked.price - (payment === "online" ? 100 : 0);
@@ -126,8 +122,8 @@ function SlimofastPage() {
     }
     setSubscriptionErrors({});
     const WHATSAPP_DESTINATION_NUMBER = "91XXXXXXXXXX";
-    const paymentLabel = parsed.data.payment === "cod" ? "Pay on Delivery" : "Online payment";
-    const message = `Hello Slimofast, my name is ${parsed.data.name}. I am interested in the ${parsed.data.goal} kg goal with ${paymentLabel}. My mobile number is ${parsed.data.phone}. Delivery address: ${parsed.data.address}, ${parsed.data.pincode}.`;
+    const paymentLabel = payment === "cod" ? "Cash on Delivery" : "online payment";
+    const message = `Hello Slimofast, I would like to unlock offers and subscribe for content. My mobile number is ${parsed.data.phone}. I am interested in the ${selectedGoal} kg goal with ${paymentLabel}.`;
     window.location.assign(`https://wa.me/${WHATSAPP_DESTINATION_NUMBER}?text=${encodeURIComponent(message)}`);
   }
 
@@ -250,24 +246,27 @@ function SlimofastPage() {
       </section>
 
       <section className="subscribe-section section-wrap" aria-labelledby="subscribe-title">
-        <div className="subscribe-heading"><p className="eyebrow">A LITTLE HELP GETTING STARTED</p><h2 id="subscribe-title">Let's make a plan.</h2><p>Share your goal and we’ll get your Slimofast conversation started on WhatsApp.</p></div>
-        <form className="subscribe-form subscription-reference-form" onSubmit={handleSubscriptionSubmit} noValidate aria-label="WhatsApp wellness plan form">
-          <input type="hidden" name="goal" value={selectedGoal} />
-          <input type="hidden" name="payment" value={payment} />
-          <div className="form-field"><label htmlFor="subscribe-name">Naam</label><input id="subscribe-name" name="name" placeholder="Your full name" autoComplete="name" maxLength={80} aria-invalid={Boolean(subscriptionErrors["name"])} aria-describedby={subscriptionErrors["name"] ? "subscribe-name-error" : undefined} />{subscriptionErrors["name"] && <span className="field-error" id="subscribe-name-error">{subscriptionErrors["name"]}</span>}</div>
-          <div className="form-field"><label htmlFor="subscribe-phone">Mobile Number</label><div className="phone-input"><span aria-hidden="true">+ 91</span><input id="subscribe-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="10-digit number" maxLength={18} aria-invalid={Boolean(subscriptionErrors["phone"])} aria-describedby={subscriptionErrors["phone"] ? "subscribe-phone-error" : undefined} /></div>{subscriptionErrors["phone"] && <span className="field-error" id="subscribe-phone-error">{subscriptionErrors["phone"]}</span>}</div>
-          <div className="form-field subscription-address"><label className="sr-only" htmlFor="subscribe-address">Delivery address</label><input id="subscribe-address" name="address" placeholder="House no, street, area" autoComplete="street-address" maxLength={240} aria-invalid={Boolean(subscriptionErrors["address"])} aria-describedby={subscriptionErrors["address"] ? "subscribe-address-error" : undefined} />{subscriptionErrors["address"] && <span className="field-error" id="subscribe-address-error">{subscriptionErrors["address"]}</span>}</div>
-          <div className="form-field"><label htmlFor="subscribe-pincode">Pincode</label><input id="subscribe-pincode" name="pincode" type="text" inputMode="numeric" autoComplete="postal-code" placeholder="6-digit pincode" maxLength={6} aria-invalid={Boolean(subscriptionErrors["pincode"])} aria-describedby={subscriptionErrors["pincode"] ? "subscribe-pincode-error" : undefined} />{subscriptionErrors["pincode"] && <span className="field-error" id="subscribe-pincode-error">{subscriptionErrors["pincode"]}</span>}</div>
-          <fieldset className="payment-fieldset"><legend>Payment Type</legend><div className="payment-choices"><Button type="button" variant={payment === "cod" ? "default" : "outline"} className={`payment-choice${payment === "cod" ? " is-selected" : ""}`} aria-pressed={payment === "cod"} onClick={() => setPayment("cod")}>💰 Pay on Delivery</Button><Button type="button" variant={payment === "online" ? "default" : "outline"} className={`payment-choice${payment === "online" ? " is-selected" : ""}`} aria-pressed={payment === "online"} onClick={() => setPayment("online")}>💳 Online (₹100 OFF)</Button></div></fieldset>
+        <div className="subscribe-heading"><h2 id="subscribe-title">Unlock offers &amp;<br />subscribe for content</h2></div>
+        <form className="subscribe-form subscription-reference-form" onSubmit={handleSubscriptionSubmit} noValidate aria-label="WhatsApp subscription form">
+          <div className="subscription-input-row">
+            <div className="form-field"><label className="sr-only" htmlFor="subscribe-phone">Mobile Number</label><input id="subscribe-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="Enter Your Phone Number" maxLength={18} aria-invalid={Boolean(subscriptionErrors["phone"])} aria-describedby={subscriptionErrors["phone"] ? "subscribe-phone-error" : undefined} />{subscriptionErrors["phone"] && <span className="field-error" id="subscribe-phone-error">{subscriptionErrors["phone"]}</span>}</div>
+            <Button type="submit" className="subscription-submit">SUBMIT</Button>
+          </div>
           {subscriptionNotice && <p className={`form-notice${Object.keys(subscriptionErrors).length ? " form-notice-error" : ""}`} role="status">{subscriptionNotice}</p>}
-          <div className="subscription-submit-label">Payment Type</div>
-          <Button type="submit" className="primary-action submit-order">Place Order - Free Delivery ✓</Button>
         </form>
       </section>
 
-      <footer className="site-footer"><a className="brand-mark" href="#top"><Leaf aria-hidden="true" />slimofast<span>.</span></a><p>Read the product label. Dietary supplements are not a substitute for a balanced diet. Individual results vary.</p><span>© 2026 Slimofast</span></footer>
+      <footer className="site-footer">
+        <div className="footer-accordion">
+          <Button type="button" variant="ghost" className="footer-toggle" aria-expanded={openFooterPanel === "legal"} onClick={() => setOpenFooterPanel(openFooterPanel === "legal" ? null : "legal")}><span>Legal Disclaimer</span><ChevronDown aria-hidden="true" /></Button>
+          {openFooterPanel === "legal" && <p className="footer-panel">Read the product label. Dietary supplements are not a substitute for a balanced diet. Individual results vary.</p>}
+          <Button type="button" variant="ghost" className="footer-toggle" aria-expanded={openFooterPanel === "links"} onClick={() => setOpenFooterPanel(openFooterPanel === "links" ? null : "links")}><span>Quick Links</span><ChevronDown aria-hidden="true" /></Button>
+          {openFooterPanel === "links" && <nav className="footer-panel footer-links" aria-label="Quick links"><a href="#offers">Offers</a><a href="#order">Order Now</a><a href="#top">Back to top</a></nav>}
+        </div>
+        <div className="social-links" aria-label="Social media"><a href="#top" aria-label="Facebook"><Facebook aria-hidden="true" /></a><a href="#top" aria-label="Instagram"><Instagram aria-hidden="true" /></a><a href="#top" className="pinterest-link" aria-label="Pinterest">P</a><a href="#top" aria-label="YouTube"><Youtube aria-hidden="true" /></a></div>
+      </footer>
 
-      <div className="sticky-order-bar"><div className="sticky-price"><span>YOUR SELECTED PACK</span><strong>₹{price.toLocaleString("en-IN")}</strong></div><Button type="button" className="sticky-order-button" onClick={scrollToOrder}>Order now <ArrowDown aria-hidden="true" /></Button></div>
+      <div className="sticky-order-bar"><div className="sticky-price"><span>YOUR SELECTED PACK</span><strong>₹{price.toLocaleString("en-IN")}</strong></div><Button type="button" className="sticky-order-button" onClick={scrollToOrder}>ORDER NOW - {payment === "cod" ? "COD" : "ONLINE"} ✓</Button></div>
     </main>
   );
 }
