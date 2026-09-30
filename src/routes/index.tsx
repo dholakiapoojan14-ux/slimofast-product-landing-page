@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const goals = [
   { kilos: 5, price: 399, label: "Starter pack" },
-  { kilos: 10, price: 799, label: "2-bottle pack" },
+  { kilos: 10, price: 999, label: "2-bottle pack" },
   { kilos: 15, price: 1299, label: "3-bottle pack" },
   { kilos: 20, price: 1799, label: "4-bottle pack" },
   { kilos: 25, price: 2299, label: "5-bottle pack" },
