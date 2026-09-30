@@ -286,6 +286,7 @@ h1, h2, h3, p { margin-top: 0; }
 .subscribe-section { display: grid; gap: 1.25rem; padding-top: 4.25rem; padding-bottom: 4.2rem; }
 .subscribe-heading h2 { font-size: clamp(2rem, 7vw, 2.75rem); }
 .subscribe-form { gap: .8rem; }
+.subscription-submit-label { color: var(--color-foreground); font-size: .78rem; font-weight: 700; }
 .site-footer { display: grid; gap: .45rem; padding: 1.25rem 1.35rem 1rem; border-top: 1px solid var(--color-line); background: var(--color-background); }
 .site-footer .brand-mark { justify-self: start; }
 .site-footer p, .site-footer > span:last-child { margin: 0; color: var(--color-muted-foreground); font-size: .65rem; }
@@ -469,6 +470,10 @@ h1, h2, h3, p { margin-top: 0; }
   .field-total, .privacy-note { font-size: .58rem; }
   .subscribe-section { gap: .7rem; padding-top: 1.35rem; padding-bottom: 1.35rem; }
   .subscribe-heading h2 { font-size: 1rem; }
+  .subscription-reference-form { gap: .72rem; padding: 1.45rem 1.05rem 1.25rem; background: var(--color-background); }
+  .subscription-reference-form .subscription-address { margin-top: 1.35rem; }
+  .subscription-reference-form .payment-choices { gap: 0; }
+  .subscription-reference-form .subscription-submit-label { margin-top: -.05rem; font-size: .72rem; font-weight: 750; }
   .site-footer { padding: .8rem .75rem; }
   .site-footer p, .site-footer > span:last-child { font-size: .52rem; }
   .sticky-order-bar { min-height: 3.65rem; gap: .55rem; padding: .42rem .75rem; background: var(--background); }
