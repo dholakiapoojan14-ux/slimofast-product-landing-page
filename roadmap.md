@@ -1,5 +1,5 @@
 - [x] Build the Slimofast product page from the supplied PDF and mobile checkout reference.
 - [x] Implement goal-based offer selection, FAQ accordion, validated order form, WhatsApp subscription, sticky order button, and thank-you page.
 - [x] Check mobile layout and verify the main interactions and preview diagnostics.
-- [ ] Match the supplied mobile Figma frame's copy and visual proportions without changing interactions.
-- [ ] Recheck phone validation, selection, FAQ, WhatsApp, sticky order, and thank-you flow.
+- [x] Match the supplied mobile Figma frame's copy and visual proportions without changing interactions.
+- [x] Recheck phone validation, selection, FAQ, WhatsApp, sticky order, and thank-you flow.

@@ -8,6 +8,21 @@
 @theme inline {
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-cream: var(--surface-warm);
   --color-forest: var(--forest);
   --color-forest-foreground: var(--forest-foreground);
@@ -456,7 +471,7 @@ h1, h2, h3, p { margin-top: 0; }
   .subscribe-heading h2 { font-size: 1rem; }
   .site-footer { padding: .8rem .75rem; }
   .site-footer p, .site-footer > span:last-child { font-size: .52rem; }
-  .sticky-order-bar { min-height: 3.65rem; gap: .55rem; padding: .42rem .75rem; }
+  .sticky-order-bar { min-height: 3.65rem; gap: .55rem; padding: .42rem .75rem; background: var(--background); }
   .sticky-price > span { display: none; }
   .sticky-price > strong { font-size: 1rem; }
   .sticky-order-button { min-width: 9.2rem; min-height: 2.65rem; border-radius: .35rem; font-size: .7rem; }
