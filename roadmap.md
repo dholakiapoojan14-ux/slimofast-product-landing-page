@@ -5,3 +5,4 @@
 - [x] Recheck phone validation, selection, FAQ, WhatsApp, sticky order, and thank-you flow.
 - [x] Match the reference payment amounts: ₹999 for Cash on Delivery and ₹899 for online payment.
 - [x] Replace the lower subscription form with the attached mobile form and remove the WhatsApp destination note.
+- [x] Match the attached single-field subscription, expandable footer, social row, and green sticky order bar.
