@@ -1,13 +1,12 @@
-# Replace the lower subscription form
+# Match the attached subscription and footer reference
 
 ## Changes
-- Restyle the form below the order form to match the attached mobile reference.
-- Use the reference field order and labels: Naam, Mobile Number, address, Pincode, and payment type.
-- Keep Indian mobile validation and the existing WhatsApp redirect.
-- Remove the visible WhatsApp destination placeholder line.
-- Leave the main order form and all other page interactions unchanged.
+- Replace the lower multi-field subscription form with the single phone-number subscription row shown in the reference.
+- Keep compulsory Indian mobile validation and redirect valid submissions to WhatsApp with a pre-filled message.
+- Add the reference footer structure: Legal Disclaimer and Quick Links expandable rows, plus social icons.
+- Restyle the fixed mobile order bar to match the green bar, ₹999 price, and white “ORDER NOW - COD ✓” button while retaining selected-price and payment updates.
+- Leave the main order form, FAQ, weight selection, Thank You redirect, and all other interactions unchanged.
 
 ## Verification
-- Check the mobile form visually against the attachment.
-- Confirm invalid Indian numbers are blocked and valid submissions open WhatsApp.
-- Confirm the page still builds without errors.
+- Check the mobile layout against the attached image.
+- Confirm invalid subscription numbers are blocked, valid numbers open WhatsApp, footer rows toggle, and the sticky order button focuses the order form.
