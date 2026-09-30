@@ -1,3 +1,9 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
   --font-sans: var(--font-body);

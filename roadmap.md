@@ -1,3 +1,3 @@
-- [ ] Build the Slimofast product page from the supplied PDF and mobile checkout reference.
-- [ ] Implement goal-based offer selection, FAQ accordion, validated order form, WhatsApp subscription, sticky order button, and thank-you page.
-- [ ] Check mobile layout and verify the main interactions and preview diagnostics.
+- [x] Build the Slimofast product page from the supplied PDF and mobile checkout reference.
+- [x] Implement goal-based offer selection, FAQ accordion, validated order form, WhatsApp subscription, sticky order button, and thank-you page.
+- [x] Check mobile layout and verify the main interactions and preview diagnostics.
