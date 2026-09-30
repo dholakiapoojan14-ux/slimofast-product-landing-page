@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the app on TanStack Start and use the supplied original product photos locally because the requested plain-file bundle conflicts with the project's fixed framework and asset delivery.
